@@ -848,7 +848,7 @@
 
 		if('onmouseup' in document) {
 			var proceed = true;
-			var maxAllowedMove = 20;
+			var maxAllowedMove = 2;
 			// custom modif, fix when swiping on slick do not trigger click
 			objects.on( 'mousedown.maxCustomLightBox', function( e ){
 				var counter = 0;
