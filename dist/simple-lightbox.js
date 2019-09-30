@@ -347,7 +347,9 @@
 
 				// close lightbox on close btn
 				$( document ).on('click.'+prefix+ ' touchstart.'+prefix, '.sl-close', function(e){
-					e.preventDefault();
+					//e.preventDefault();
+					// this triggers errors in chrome
+					// [Intervention] Unable to preventDefault inside passive event listener due to target being treated as passive. See https://www.chromestatus.com/features/5093566007214080
 					if(opened){ close();}
 				});
 
