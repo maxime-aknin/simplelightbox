@@ -847,15 +847,21 @@
 		};
 
 		if('onmouseup' in document) {
-			var proceed = true
+			var proceed = true;
+			var maxAllowedMove = 20;
 			// custom modif, fix when swiping on slick do not trigger click
 			objects.on( 'mousedown.maxCustomLightBox', function( e ){
-				$(window).one('mousemove', function() {
+				var counter = 0;
+				$(document).on('mousemove.maxCustomLightBox', function() {
 					// mouse moved ! We will not open lightbox
-					proceed = false
+					counter++;
+					if(counter > maxAllowedMove) {
+						proceed = false
+						$(document).off('mousemove.maxCustomLightBox')
+					}
 				})
 			});
-			objects.on('mouseup', function(e) {
+			objects.on('mouseup.maxCustomLightBox', function(e) {
 				if(proceed) {
 					if(isValidLink(this)){
 						e.preventDefault();
@@ -864,15 +870,13 @@
 						startIndex = objects.index(elem);
 						openImage(elem);
 					}
-				} else {
-					proceed = true
 				}
+				$(document).off('mousemove.maxCustomLightBox')
+				proceed = true
 			})
 		} else {
 			// open lightbox
 			objects.on( 'click.'+prefix, function( e ){
-				console.warn('clicked !')
-				console.warn(e)
 				if(isValidLink(this)){
 					e.preventDefault();
 					if(animating) return false;
